@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Day from './day';
+import Navbar from './navbar';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+const weekItems = week.map((day) =>
+<Day day={day} />
+);
+
+class App extends React.Component {
+  render () {
+      return (
+          <div class="flex flex-col w-screen h-screen bg-black font-mono">
+              <Navbar />
+              <div class="flex flex-row space-x-4 items-stretch h-full w-full p-3">
+                <Day day="monday" />
+                <Day day="tuesday" />
+                <Day day="wednesday" />
+                <Day day="thursday" />
+                <Day day="friday" />
+                <Day day="saturday" />
+                <Day day="sunday" />
+              </div>
+          </div>
+      )
+  }
 }
+
 
 export default App;
