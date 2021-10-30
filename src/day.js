@@ -4,19 +4,19 @@ import TodoForm from './todo-form';
 class Day extends React.Component {
     constructor(props) {
         super(props);
-
-        this.renderForm = this.renderForm.bind(this);
+        this.state = {todoform: <Todo day={this.props.day} />}
+        //this.renderForm = this.renderForm.bind(this);
 
     }
-
+    /*
     renderForm() {
         //make it a popup somehow?
         return <Todo day={this.props.day} />;
-    }
+    }*/
 
     render() {
         return (
-            <div class="flex flex-col h-full w-full bg-black text-green-400 p-5">
+            <div class="flex flex-col h-full w-1/7 bg-black text-green-400 p-5">
                 <div class="flex flex-col p-3 border border-green-400 text-xl font-bold self-stretch mb-3">
                     <div class="self-center">{this.props.day}</div>
                 </div>
@@ -25,9 +25,13 @@ class Day extends React.Component {
                         <Todo text="write text" />
                         <Todo text="read book" />
                     </ul>
+                    <div class="">
+                        <TodoForm day={this.props.day} />
+                    </div>
 
                     <button class="absolute place-self-end bottom-2 right-2 font-bold text-blue-200 border px-1 hover:border-2"
-                    onClick={this.renderForm}>+</button>
+                    onClick={this.state.todoform}>+</button>
+                    
                 </div>
 
             </div>
