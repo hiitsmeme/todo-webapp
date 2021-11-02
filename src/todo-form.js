@@ -17,15 +17,15 @@ class TodoForm extends React.Component {
     }
 
     handleSubmit(event) {
-        let tododict = {
-            todotext: this.state.value,
-            day: this.props.day
+        let todo = {
+            "todotext" : this.state.value,
+            "day": this.props.day
         }
        
         $.ajax({
             url: '/todo',
             type: 'POST',
-            data: tododict,
+            data: todo,
             success: function(response){
                 //
             }
@@ -36,9 +36,10 @@ class TodoForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit} class="bg-black flex flex-col">
-                <label>Todo:
-                    <textarea 
-                    class="bg-black border border-blue-200 pt-1"
+                <label>
+                    <div>Todo:</div>
+                    <textarea
+                    class="bg-black border border-blue-200 pt-1 resize-none"
                     value={this.state.value} 
                     onChange={this.handleChange} />
                 </label>

@@ -44,13 +44,15 @@ week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 @app.route("/todo", methods=["GET", "POST"])
 def todo():
     if request.method == "POST":
-        #add todo to databank
+        #get data
         todotext = request.form.get('todotext')
         day = request.form.get('day')
 
+        #check if data is valid
         if len(todotext) == 0 or len(day) == 0:
             return
         
+        #add todo to database
         Todo(todotext, day)
         
 #--------------------#
@@ -90,7 +92,7 @@ class Todo(Base):
     def moveToNextDay(self):
         return
 
-    def currentTodo(self):
+    def formatTodo(self):
         dic = {
             'id' : self.id,
             'todotext' : self.todotext,
@@ -98,12 +100,11 @@ class Todo(Base):
             'done' : self.done
         }
         return dic
-
-    
+  
     def allTodos():
         todo_list = []
         for todo in session.query(Todo).all():
-            todo_list.append(todo.currentTodo()) 
+            todo_list.append(todo.formatTodo()) 
         return todo_list
     
     

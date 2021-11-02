@@ -10,16 +10,16 @@ const weekItems = week.map((day) =>
 class App extends React.Component {
   render () {
       return (
-          <div class="flex flex-col w-screen h-screen bg-black font-mono">
-              <Navbar />
-              <div class="flex flex-row space-x-4 items-stretch h-full w-full p-3">
-                <Day day="monday" />
+          <div class="flex flex-col w-screen min-h-screen overflow-auto bg-black font-mono">
+              <Navbar class="box-border"/>
+              <div class="flex sm:flex-row flex-col sm:flex-wrap gap-4 justify-evenly box-border">
+                <Day day="monday"/>
                 <Day day="tuesday" />
                 <Day day="wednesday" />
                 <Day day="thursday" />
                 <Day day="friday" />
-                <Day day="saturday" />
-                <Day day="sunday" />
+                <Day day="saturday"/>
+                <Day day="sunday"/>
               </div>
           </div>
       )
