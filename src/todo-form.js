@@ -35,17 +35,17 @@ class TodoForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} class="bg-black flex flex-col">
-                <label>
-                    <div>Todo:</div>
+            <form onSubmit={this.handleSubmit} class="bg-gray-700 border border-green-300 my-3 flex flex-col space-y-2 p-2">
+               
                     <textarea
-                    class="bg-black border border-blue-200 pt-1 resize-none"
+                    class="bg-black border border-green-300 active:border-green-300 p-1 resize-none inline-block"
                     value={this.state.value} 
+                    placeholder='Todo:'
                     onChange={this.handleChange} />
-                </label>
+               
                 <input 
-                class="self-end bg-black border border-blue-200 p-1"
-                id='submittodo' type="submit" value="submit" />
+                class="bg-black border border-green-300 p-1 w-1/4 self-center"
+                id='submittodo' type="submit" value="add" />
             </form>
         )
     }
