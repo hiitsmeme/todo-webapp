@@ -5,9 +5,12 @@ class Day extends React.Component {
     constructor(props) {
         super(props);
         this.state = {isFormDisplayed: false}
+        //do a state variable for todos
         this.renderForm = this.renderForm.bind(this);
 
     }
+
+    //make get request for data somehow with json object???
     
     renderForm() {
         //make form disappear
@@ -32,6 +35,7 @@ class Day extends React.Component {
                 </div>
                 <div class="static flex flex-col p-3 px-5 border border-pink-300 text-pink-300 text-md overflow-auto">
                     <ul>
+                        {/* display data somehow */}
                         <Todo text="write text"/>
                         <Todo text="read book" />
                         <div>{this.state.isFormDisplayed ? <TodoForm day={this.props.day} /> : ''}</div>

@@ -23,11 +23,12 @@ class TodoForm extends React.Component {
         }
        
         $.ajax({
-            url: '/todo',
+            url: 'http://127.0.0.1:5000/todo',
             type: 'POST',
             data: todo,
             success: function(response){
                 //
+                return 200;
             }
         })    
     
