@@ -57,6 +57,11 @@ def todo():
         Todo(todotext, day)
 
         return 200
+    
+    else:
+        day = request.args.get('day')
+        todos = Todo.findTodo('day', day)
+        return todos
         
 #--------------------#
 

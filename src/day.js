@@ -5,12 +5,23 @@ class Day extends React.Component {
     constructor(props) {
         super(props);
         this.state = {isFormDisplayed: false}
-        //do a state variable for todos
+        this.state = {data: []}
         this.renderForm = this.renderForm.bind(this);
-
+        this.loadData = this.loadData.bind(this);
     }
 
-    //make get request for data somehow with json object???
+    //make get request for data somehow
+    loadData() {
+        //need to give day as input
+        $.ajax({
+            url: 'http://127.0.0.1:5000/todo',
+            type: 'GET',
+            success: function(res) {
+                console.log(res);
+                this.setState({data: res});
+            }
+        })
+    }
     
     renderForm() {
         //make form disappear
@@ -34,7 +45,7 @@ class Day extends React.Component {
                     <div class="self-center">{this.props.day}</div>
                 </div>
                 <div class="static flex flex-col p-3 px-5 border border-pink-300 text-pink-300 text-md overflow-auto">
-                    <ul>
+                    <ul id="data">
                         {/* display data somehow */}
                         <Todo text="write text"/>
                         <Todo text="read book" />
