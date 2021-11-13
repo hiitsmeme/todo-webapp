@@ -41,7 +41,17 @@ week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 #------------------#
 
 #-------Routes-------#
-@app.route("/todo", methods=["GET", "POST"])
+@app.route("/index", methods=["POST"])
+def index():
+    day = request.form.get('day')
+    ogtodos = Todo.findTodo('day', day)
+    todos = []
+    for todo in ogtodos:
+        todos.append(todo.formatTodo())
+    print(todos)
+    return todos
+
+@app.route("/todo", methods=["POST"])
 def todo():
     if request.method == "POST":
         #get data
@@ -58,10 +68,7 @@ def todo():
 
         return 200
     
-    else:
-        day = request.args.get('day')
-        todos = Todo.findTodo('day', day)
-        return todos
+
         
 #--------------------#
 

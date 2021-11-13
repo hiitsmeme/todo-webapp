@@ -12,7 +12,7 @@ class App extends React.Component {
       return (
           <div class="flex flex-col w-screen min-h-screen overflow-auto bg-black font-mono">
               <Navbar class="box-border"/>
-              <div class="flex sm:flex-row flex-col sm:flex-wrap gap-4 justify-evenly box-border">
+              <div class="flex sm:flex-row flex-col w-full h-full sm:flex-wrap gap-3 justify-evenly box-border">
                 <Day day="monday"/>
                 <Day day="tuesday" />
                 <Day day="wednesday" />
