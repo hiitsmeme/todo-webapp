@@ -14,12 +14,12 @@ class App extends React.Component {
               <Navbar class="box-border"/>
               <div class="flex sm:flex-row flex-col w-full h-full sm:flex-wrap gap-3 justify-evenly box-border">
                 <Day day="monday"/>
-                <Day day="tuesday" />
+                {/*<Day day="tuesday" />
                 <Day day="wednesday" />
                 <Day day="thursday" />
                 <Day day="friday" />
                 <Day day="saturday"/>
-                <Day day="sunday"/>
+      <Day day="sunday"/> */}
               </div>
           </div>
       )

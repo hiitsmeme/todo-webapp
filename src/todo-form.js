@@ -27,7 +27,6 @@ class TodoForm extends React.Component {
             type: 'POST',
             data: todo,
             success: function(response){
-                //
                 return 200;
             }
         })    

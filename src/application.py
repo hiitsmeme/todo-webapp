@@ -3,7 +3,6 @@ import flask_login
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, sessionmaker
-from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
@@ -41,22 +40,21 @@ week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 #------------------#
 
 #-------Routes-------#
-@app.route("/index", methods=["POST"])
-def index():
-    day = request.form.get('day')
-    ogtodos = Todo.findTodo('day', day)
-    todos = []
-    for todo in ogtodos:
-        todos.append(todo.formatTodo())
-    print(todos)
-    return todos
+@app.route("/gettodos", methods=["POST"])
+def gettodos():
+    #should do what it's supposed to do I think
+    if request.method == "POST":
+        day = request.form.get('day')
+        print(day)
+        todos = Todo.findTodo('day', day)
+        print('finaltodos' +  str(todos))
+        return str(todos)
 
 @app.route("/todo", methods=["POST"])
 def todo():
     if request.method == "POST":
         #get data
         todotext = request.form.get('todotext')
-        print(todotext)
         day = request.form.get('day')
 
         #check if data is valid
@@ -66,10 +64,7 @@ def todo():
         #add todo to database
         Todo(todotext, day)
 
-        return 200
-    
-
-        
+        return 200      
 #--------------------#
 
 #-------Todo Class--------#
@@ -96,23 +91,30 @@ class Todo(Base):
     def findTodo(Type, Value):
         Type = str.lower(Type)
         if (Type == 'day'):
+            mytodos = []
             with MySession() as sess:
-                todo = sess.query(Todo).filter_by(day = Value).all()
+                todos = sess.query(Todo).filter_by(day = Value).all()
+                print('todos: ' + str(todos))
+                for todo in todos:
+                    mytodos.append(Todo.formatTodo(todo))
+                print('mytodos:' + str(mytodos))
+                return mytodos
         
         if (Type == 'id'):
-            todo = sess.query(Todo).filter_by(id = Value).first()
+            with MySession() as sess:
+                todo = sess.query(Todo).filter_by(id = Value).first()
         
-        return todo
+            return todo
     
     def moveToNextDay(self):
         return
 
     def formatTodo(self):
         dic = {
-            'id' : self.id,
-            'todotext' : self.todotext,
-            'day' : self.day,
-            'done' : self.done
+            'id' : str(self.id),
+            'todotext' : str(self.todotext),
+            'day' : str(self.day),
+            'done' : str(self.done)
         }
         return dic
   
@@ -122,4 +124,4 @@ class Todo(Base):
             todo_list.append(todo.formatTodo()) 
         return todo_list
 
-app.run()
+app.run(debug=True)
