@@ -8,7 +8,7 @@
             "name": "Python debug",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/src/application.py",
             "console": "integratedTerminal"
         },
         {

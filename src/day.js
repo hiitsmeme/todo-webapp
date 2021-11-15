@@ -13,6 +13,7 @@ class Day extends React.Component {
         //functions
         this.renderForm = this.renderForm.bind(this);
         this.loadData = this.loadData.bind(this);
+        this.dataCallback = this.dataCallback.bind(this);
     }
 
     //request todos
@@ -26,14 +27,15 @@ class Day extends React.Component {
             type: 'POST',
             data: day,
             dataType: "json",
-            success: function(res) {
-                mytodos = JSON.parse(res);
-                this.setState({data: mytodos});
-            }, error: function(e) {
+            success: this.dataCallback, error: function(e) {
                 console.log('Fail');
                 return;
             } 
         });
+    }
+
+    dataCallback(res){
+        this.setState({data: res});
     }
     
     //changes state var
