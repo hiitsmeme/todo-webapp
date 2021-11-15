@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
-import enum
+import json
 
 #------Configs------#
 app = Flask(__name__)
@@ -47,8 +47,8 @@ def gettodos():
         day = request.form.get('day')
         print(day)
         todos = Todo.findTodo('day', day)
-        print('finaltodos' +  str(todos))
-        return str(todos)
+        print('finaltodos' +  json.dumps(todos))
+        return json.dumps(todos)
 
 @app.route("/todo", methods=["POST"])
 def todo():
@@ -64,7 +64,7 @@ def todo():
         #add todo to database
         Todo(todotext, day)
 
-        return 200      
+        return '200'      
 #--------------------#
 
 #-------Todo Class--------#

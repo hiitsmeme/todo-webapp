@@ -8,7 +8,7 @@ class Day extends React.Component {
 
         //state vars
         this.state = {isFormDisplayed: false}
-        this.state = {data: ''}
+        this.state = {data: []}
 
         //functions
         this.renderForm = this.renderForm.bind(this);
@@ -17,6 +17,7 @@ class Day extends React.Component {
 
     //request todos
     loadData() {
+        var mytodos;
         let day = {
             'day' : this.props.day
         }
@@ -24,12 +25,15 @@ class Day extends React.Component {
             url: 'http://127.0.0.1:5000/gettodos',
             type: 'POST',
             data: day,
-            //response doesnt work dont know why
+            dataType: "json",
             success: function(res) {
-                console.log(res);
-                this.setState({data: res});
-            }
-        })
+                mytodos = JSON.parse(res);
+                this.setState({data: mytodos});
+            }, error: function(e) {
+                console.log('Fail');
+                return;
+            } 
+        });
     }
     
     //changes state var
@@ -49,10 +53,13 @@ class Day extends React.Component {
     }
 
     render() {
-        this.loadData()
+        this.loadData();
+        const mytodos = this.state.data;
         const todos = [];
-        for (let todo of this.state.data) {
-            todos.push(<li key={todo.id}><Todo text={todo.text}/></li>)
+        for (const todo of mytodos) {
+            for (const {todotext} of Object.entries(todo)) {
+                todos.push(<li key={todo.id}><Todo text={todotext}/></li>)
+            }
         }
         return (
             <div class="flex flex-col h-full bg-black text-green-400 overflow-y-auto p-5">
