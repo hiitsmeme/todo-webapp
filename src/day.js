@@ -14,11 +14,12 @@ class Day extends React.Component {
         this.renderForm = this.renderForm.bind(this);
         this.loadData = this.loadData.bind(this);
         this.dataCallback = this.dataCallback.bind(this);
+
+        this.loadData();
     }
 
     //request todos
     loadData() {
-        var mytodos;
         let day = {
             'day' : this.props.day
         }
@@ -28,14 +29,20 @@ class Day extends React.Component {
             data: day,
             dataType: "json",
             success: this.dataCallback, error: function(e) {
-                console.log('Fail');
                 return;
             } 
         });
     }
 
+
     dataCallback(res){
-        this.setState({data: res});
+        const mytodos = res;
+        const todos = [];
+        //assign todos to listitems
+        for (const todo of mytodos) {
+            todos.push(<li key={todo.id.toString()}><Todo text={todo.todotext}/></li>)
+        }
+        this.setState({data:  todos});
     }
     
     //changes state var
@@ -55,14 +62,6 @@ class Day extends React.Component {
     }
 
     render() {
-        this.loadData();
-        const mytodos = this.state.data;
-        const todos = [];
-        for (const todo of mytodos) {
-            for (const {todotext} of Object.entries(todo)) {
-                todos.push(<li key={todo.id}><Todo text={todotext}/></li>)
-            }
-        }
         return (
             <div class="flex flex-col h-full bg-black text-green-400 overflow-y-auto p-5">
                 <div class="flex flex-col p-3 px-5 border border-green-400 text-xl font-bold self-stretch mb-3">
@@ -71,7 +70,7 @@ class Day extends React.Component {
                 <div class="static flex flex-col p-3 px-5 border border-pink-300 text-pink-300 text-md overflow-auto">
                     <ul>
                         {/* display data */}
-                        {todos}
+                        {this.state.data}
                         <div>{this.state.isFormDisplayed ? <TodoForm day={this.props.day} /> : ''}</div>
                     </ul>
 
