@@ -17,6 +17,10 @@ class TodoForm extends React.Component {
     }
 
     handleSubmit(event) {
+        if (this.state.value.length < 1)
+        {
+            window.alert ('Enter a todo')
+        }
         let todo = {
             "todotext" : this.state.value,
             "day": this.props.day
