@@ -7,14 +7,14 @@ class App extends React.Component {
       return (
           <div class="flex flex-col w-screen min-h-screen overflow-auto bg-black font-mono">
               <Navbar class="box-border"/>
-              <div class="flex sm:flex-row flex-col w-full h-full sm:flex-wrap gap-3 justify-evenly box-border">
+              <div class="flex sm:grid sm:grid-cols-3 md:grid-cols-4 flex-col w-full h-full sm:flex-wrap gap-2 box-border">
                 <Day day="monday"/>
                 <Day day="tuesday" />
                 <Day day="wednesday" />
                 <Day day="thursday" />
                 <Day day="friday" />
                 <Day day="saturday"/>
-                <Day day="sunday"/> 
+                <Day class='md:col-start-2 md:col-end-3' day="sunday"/> 
               </div>
           </div>
       )
