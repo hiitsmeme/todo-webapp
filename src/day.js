@@ -41,7 +41,7 @@ class Day extends React.Component {
         const todos = [];
         //assign todos to listitems
         for (const todo of mytodos) {
-            todos.push(<li key={todo.id.toString()}><Todo text={todo.todotext}/></li>)
+            todos.push(<li key={todo.id.toString()}><Todo todo={todo}/></li>)
         }
         this.setState({data:  todos});
     }
@@ -70,7 +70,7 @@ class Day extends React.Component {
                     <div class="self-center">{this.props.day}</div>
                 </div>
 
-                <div class="relative flex flex-col h-full p-3 px-5 border border-pink-300 text-pink-300 text-md overflow-auto">
+                <div class="relative flex flex-col h-full p-3 px-5 border border-pink-300 text-pink-300 text-md overflow-auto resize-y">
                     <ul>
                         {/* display data */}
                         {this.state.data}
@@ -78,9 +78,9 @@ class Day extends React.Component {
                         <div class="">{this.state.isFormDisplayed ? <TodoForm day={this.props.day} /> : ''}</div>
                     </ul>
 
-                    <button class="absolute mt-2 place-self-end bottom-2 
+                    <div class='mt-2'><button class="absolute mt-2 place-self-end bottom-2 
                                     right-2 font-bold text-blue-200 border px-1 hover:border-2"
-                    onClick={this.renderForm}>+</button>
+                    onClick={this.renderForm}>+</button></div>
                 </div>
 
             </div>

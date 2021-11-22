@@ -65,7 +65,51 @@ def todo():
         #add todo to database
         Todo(todotext, day)
 
-        return '200'      
+        return '200'   
+
+@app.route('/delete', methods=['POST'])
+def delete():
+    if request.method == 'POST':
+        #get data
+        id = request.form.get('id')
+        print('id' + str(id))
+        Todo.removeTodo(id) 
+
+        return '200'
+
+@app.route('/move', methods=['POST'])
+def move():
+    if request.method == 'POST':
+        #get data
+        id = request.form.get('id')
+        todotext = request.form.get('todotext')
+        day = request.form.get('day')
+        done = request.form.get('done')
+
+        #create new todo at next day
+        week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        this_day = ''
+        if day in 'sunday':
+            this_day = 'monday'
+        elif day in 'monday':
+            this_day = 'tuesday'
+        elif day in 'tuesday':
+            this_day = 'wednesday'
+        elif day in 'wednesday':
+            this_day = 'thursday'
+        elif day in 'thursday':
+            this_day = 'friday'
+        elif day in 'friday':
+            this_day = 'saturday'
+        elif day in 'saturday':
+            this_day = 'sunday'
+    
+        Todo(todotext, this_day)
+        
+        #delete old todo
+        Todo.removeTodo(id)
+
+        return '200'
 #--------------------#
 
 #-------Todo Class--------#
@@ -85,8 +129,9 @@ class Todo(Base):
         session.add(self)
         session.commit()
     
-    def removeTodo(self):
-        session.delete(self)
+    def removeTodo(id):
+        todo = Todo.findTodo('id', id)
+        session.delete(todo)
         session.commit()
     
     def findTodo(Type, Value):
