@@ -43,7 +43,7 @@ class Day extends React.Component {
         for (const todo of mytodos) {
             todos.push(<li key={todo.id.toString()}><Todo todo={todo}/></li>)
         }
-        this.setState({data:  todos});
+        this.setState({data: todos});
     }
     
     //changes state var

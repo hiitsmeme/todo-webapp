@@ -37,14 +37,15 @@ class Menu extends React.Component {
     }
 
     editTodo() {
-
+        this.props.editmenufct();
+        this.props.menufct();
     }
 
     render() {
         return <ul class='flex text-sm flex-col space-y-1 z-10 absolute ml-2 bg-black text-gray-200 border border-gray-400'>
         <button onClick={this.deleteTodo} class='p-2 text-left hover:bg-gray-800'>delete</button>
         <button onClick={this.moveTodo} class='p-2 text-left  hover:bg-gray-800'>move to next day</button>
-        <button onclick={this.editTodo} class='p-2 text-left  hover:bg-gray-800'>edit</button>
+        <button onClick={this.editTodo} class='p-2 text-left  hover:bg-gray-800'>edit</button>
     </ul>   
     }
 }

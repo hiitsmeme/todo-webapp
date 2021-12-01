@@ -7,8 +7,8 @@ class App extends React.Component {
       return (
           <div class="flex flex-col w-screen min-h-screen overflow-auto bg-black font-mono">
               <Navbar class="box-border"/>
-              <div class='w-full h-full flex sm:grid sm:grid-cols-3 
-                md:grid-cols-4 md:place-content-stretch flex-col sm:flex-wrap gap-2 box-border'>
+              <div class='w-full h-full flex sm:grid sm:grid-cols-3 sm:flex-wrap
+                md:grid-cols-3 md:place-content-stretch lg:grid-cols-4 flex-col gap-2 box-border'>
                 <Day day="monday"/>
                 <Day day="tuesday" />
                 <Day day="wednesday" />

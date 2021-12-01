@@ -43,12 +43,9 @@ week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 #-------Routes-------#
 @app.route("/gettodos", methods=["POST"])
 def gettodos():
-    #should do what it's supposed to do I think
     if request.method == "POST":
         day = request.form.get('day')
-        print(day)
         todos = Todo.findTodo('day', day)
-        print('finaltodos' +  json.dumps(todos))
         return json.dumps(todos)
 
 @app.route("/todo", methods=["POST"])
@@ -72,7 +69,6 @@ def delete():
     if request.method == 'POST':
         #get data
         id = request.form.get('id')
-        print('id' + str(id))
         Todo.removeTodo(id) 
 
         return '200'
@@ -80,14 +76,12 @@ def delete():
 @app.route('/move', methods=['POST'])
 def move():
     if request.method == 'POST':
+
         #get data
         id = request.form.get('id')
-        todotext = request.form.get('todotext')
         day = request.form.get('day')
-        done = request.form.get('done')
 
-        #create new todo at next day
-        week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        #update day
         this_day = ''
         if day in 'sunday':
             this_day = 'monday'
@@ -104,10 +98,24 @@ def move():
         elif day in 'saturday':
             this_day = 'sunday'
     
-        Todo(todotext, this_day)
-        
-        #delete old todo
-        Todo.removeTodo(id)
+        #move to next day
+        Todo.moveToNextDay(id, this_day)
+
+        return '200'
+
+@app.route('/edit', methods=['POST'])
+def edit():
+    if request.method == 'POST':
+        #get data
+        id = request.form.get('id')
+        print(id)
+        nexttext = request.form.get('nexttext')
+
+        if len(nexttext) == 0:
+            return '200'
+
+        #edit todo
+        Todo.editTodo(id, nexttext)
 
         return '200'
 #--------------------#
@@ -140,10 +148,8 @@ class Todo(Base):
             mytodos = []
             with MySession() as sess:
                 todos = sess.query(Todo).filter_by(day = Value).all()
-                print('todos: ' + str(todos))
                 for todo in todos:
                     mytodos.append(Todo.formatTodo(todo))
-                print('mytodos:' + str(mytodos))
                 return mytodos
         
         if (Type == 'id'):
@@ -152,8 +158,17 @@ class Todo(Base):
         
             return todo
     
-    def moveToNextDay(self):
-        return
+    def editTodo(id, nexttext):
+        with MySession() as sess:
+            todo = sess.query(Todo).filter_by(id = id).first()
+            todo.todotext = nexttext
+            sess.commit()
+    
+    def moveToNextDay(id, day):
+        with MySession() as sess:
+            todo = sess.query(Todo).filter_by(id = id).first()
+            todo.day = day
+            sess.commit()
 
     def formatTodo(self):
         dic = {
